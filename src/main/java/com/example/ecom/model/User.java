@@ -3,6 +3,9 @@ package com.example.ecom.model;
 import com.example.ecom.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +26,12 @@ public class User {
     private String password;
     private UserRole role;
     private boolean isDeleted;
+
+    @CreatedDate
     private LocalDateTime createdAt;
+
+    @LastModifiedDate
     private LocalDateTime lastModifiedBy;
+
 
 }
