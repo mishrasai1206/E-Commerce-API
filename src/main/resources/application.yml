@@ -3,10 +3,9 @@ spring:
     name: E-Commerce-API
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ecommerce_db
-    username: your_username
-    password: your_password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ecommerce_db?createDatabaseIfNotExist=true
+    username: root
+    password: root
 
   jpa:
     hibernate:
