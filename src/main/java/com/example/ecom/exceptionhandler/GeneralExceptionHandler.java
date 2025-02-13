@@ -1,6 +1,8 @@
 package com.example.ecom.exceptionhandler;
 
+import com.example.ecom.exception.UserNotFoundByIdException;
 import com.example.ecom.util.ErrorStructure;
+import com.example.ecom.util.ResponseStructure;
 import com.example.ecom.util.RestResponseBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,4 +21,10 @@ public class GeneralExceptionHandler {
     public ResponseEntity<ErrorStructure<String>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         return responseBuilder.error(HttpStatus.BAD_REQUEST, "Invalid Input", ex.getMessage());
     }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorStructure<String>>  userNotFoundById(UserNotFoundByIdException ex){
+        return responseBuilder.error(HttpStatus.NOT_FOUND, ex.getMessage(), "User Not found by the given id");
+    }
+
 }
