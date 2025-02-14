@@ -1,5 +1,6 @@
 package com.example.ecom.exceptionhandler;
 
+import com.example.ecom.exception.IllegalOperationException;
 import com.example.ecom.exception.UserNotFoundByIdException;
 import com.example.ecom.util.ErrorStructure;
 import com.example.ecom.util.ResponseStructure;
@@ -20,6 +21,11 @@ public class GeneralExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorStructure<String>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
         return responseBuilder.error(HttpStatus.BAD_REQUEST, "Invalid Input", ex.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorStructure<String>> handleIllegalOperation(IllegalOperationException ex) {
+        return responseBuilder.error(HttpStatus.FORBIDDEN, ex.getMessage(), "User not allowed to perform the operation");
     }
 
     @ExceptionHandler
