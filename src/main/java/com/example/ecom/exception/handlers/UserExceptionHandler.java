@@ -1,9 +1,8 @@
-package com.example.ecom.exceptionhandler;
+package com.example.ecom.exception.handlers;
 
 import com.example.ecom.exception.IllegalOperationException;
 import com.example.ecom.exception.UserNotFoundByIdException;
 import com.example.ecom.util.ErrorStructure;
-import com.example.ecom.util.ResponseStructure;
 import com.example.ecom.util.RestResponseBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,23 +13,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @AllArgsConstructor
-public class GeneralExceptionHandler {
-
+public class UserExceptionHandler {
     private final RestResponseBuilder responseBuilder;
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorStructure<String>> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
-        return responseBuilder.error(HttpStatus.BAD_REQUEST, "Invalid Input", ex.getMessage());
-    }
-
-    @ExceptionHandler(IllegalOperationException.class)
-    public ResponseEntity<ErrorStructure<String>> handleIllegalOperation(IllegalOperationException ex) {
-        return responseBuilder.error(HttpStatus.FORBIDDEN, ex.getMessage(), "User not allowed to perform the operation");
-    }
 
     @ExceptionHandler(UserNotFoundByIdException.class)
     public ResponseEntity<ErrorStructure<String>>  userNotFoundById(UserNotFoundByIdException ex){
         return responseBuilder.error(HttpStatus.NOT_FOUND, ex.getMessage(), "User Not found by the given id");
     }
-
 }

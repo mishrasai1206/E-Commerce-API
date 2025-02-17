@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-
     @Override
     public UserResponse register(UserRegistrationRequest registrationRequest) {
         User user = null;
