@@ -23,12 +23,12 @@ public class GeneralExceptionHandler {
         return responseBuilder.error(HttpStatus.BAD_REQUEST, "Invalid Input", ex.getMessage());
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ExceptionHandler(IllegalOperationException.class)
     public ResponseEntity<ErrorStructure<String>> handleIllegalOperation(IllegalOperationException ex) {
         return responseBuilder.error(HttpStatus.FORBIDDEN, ex.getMessage(), "User not allowed to perform the operation");
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(UserNotFoundByIdException.class)
     public ResponseEntity<ErrorStructure<String>>  userNotFoundById(UserNotFoundByIdException ex){
         return responseBuilder.error(HttpStatus.NOT_FOUND, ex.getMessage(), "User Not found by the given id");
     }

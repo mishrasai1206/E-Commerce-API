@@ -5,6 +5,7 @@ import com.example.ecom.dto.response.ProductResponse;
 import com.example.ecom.enums.UserRole;
 import com.example.ecom.exception.IllegalOperationException;
 import com.example.ecom.exception.ProductNotFoundByIdException;
+import com.example.ecom.exception.UserNotFoundByIdException;
 import com.example.ecom.mapper.ProductMapper;
 import com.example.ecom.model.Product;
 import com.example.ecom.model.Seller;
@@ -38,8 +39,25 @@ public class ProductServiceImpl implements ProductService {
                         productRepository.save(product);
                         return productMapper.mapToProductResponse(product);
                     } else
-                        throw new IllegalOperationException("Failed to find product.");
+                        throw new IllegalOperationException("Failed to save product.");
                 })
+                .orElseThrow(() -> new UserNotFoundByIdException("Failed to save Product"));
+    }
+
+    @Override
+    public ProductResponse findProductById(String productId) {
+        return productRepository.findById(productId)
+                .map(productMapper::mapToProductResponse)
                 .orElseThrow(() -> new ProductNotFoundByIdException("Failed to find the Product"));
+    }
+
+    @Override
+    public ProductResponse updateProductById(String productId, ProductRequest productRequest) {
+        return productRepository.findById(productId)
+                .map(product -> {
+                    product = productMapper.mapToProduct(productRequest);
+                    productRepository.save(product);
+                    return productMapper.mapToProductResponse(product);
+                }).orElseThrow(() -> new ProductNotFoundByIdException("Failed to find the Product"));
     }
 }
